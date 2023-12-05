@@ -82,7 +82,6 @@ const SignUp = () => {
                   color="#F5F8F5"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  wrapperClassName=""
                   visible={true}
                 />
               ) : (

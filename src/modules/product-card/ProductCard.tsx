@@ -1,6 +1,8 @@
 import { useCart } from "@/lib/contexts/cart-provider";
 import Button from "../button/button";
 import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 type ProductDataProps = {
   id: string;
@@ -76,7 +78,7 @@ const ProductCard = (productData: ProductDataProps) => {
           className="mb-4"
           onClick={() => handleCart(quantity)}
         >
-          Add to Cart
+          <FontAwesomeIcon icon={faCartPlus} />
         </Button>
       </div>
     </div>

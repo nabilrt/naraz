@@ -1,6 +1,7 @@
 import { useCart } from "@/lib/contexts/cart-provider";
 import Button from "../button/button";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 type ProductDataProps = {
   id: number;
@@ -27,11 +28,30 @@ const CartItem = (productData: ProductDataProps) => {
     existingProduct.quantity = quantity;
 
     await setCartItem(updatedCartItem);
+
+    toast.success("Cart Updated!", {
+      duration: 2000,
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
   };
 
   const RemoveCartItem = async (id: number) => {
     const newCart = cartItem.filter((item: any) => item.id !== id);
     await setCartItem(newCart);
+    toast.success("Item Removed From Cart!", {
+      duration: 2000,
+
+      // Styling
+      style: {
+        borderRadius: "10px",
+        background: "#333",
+        color: "#fff",
+      },
+    });
   };
 
   return (
@@ -70,7 +90,6 @@ const CartItem = (productData: ProductDataProps) => {
                     onClick={() =>
                       setQuantity((prevQuantity) => prevQuantity + 1)
                     }
-                    
                   >
                     +
                   </button>

@@ -30,33 +30,33 @@ export default function Home() {
     fetchProducts();
   }, []);
 
-  console.log(state.products);
-
   return (
-    <div>
-      <div className="font-semibold mb-4">
-        <h2>Products</h2>
-      </div>
-
-      <div className="flex space-x-3">
-        {state.loading ? (
-          <ThreeDots
-            height="80"
-            width="80"
-            radius="9"
-            color="#805ad5"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            visible={true}
-          />
-        ) : (
-          <>
-            {state.products?.slice(0,5).map((product: any) => 
-              <ProductCard {...product} key={product.id} />
-            )}
-          </>
-        )}
-      </div>
+    <div className="container mx-auto">
+    <div className="font-semibold mb-4">
+      <h2>Products</h2>
     </div>
+
+    <div className="flex flex-wrap space-x-3">
+      {state.loading ? (
+        <ThreeDots
+          height="80"
+          width="80"
+          radius="9"
+          color="#805ad5"
+          ariaLabel="three-dots-loading"
+          wrapperStyle={{}}
+          visible={true}
+        />
+      ) : (
+        <>
+          {state.products?.slice(0,5).map((product: any) => (
+            <div key={product.id}>
+              <ProductCard {...product} />
+            </div>
+          ))}
+        </>
+      )}
+    </div>
+  </div>
   );
 }

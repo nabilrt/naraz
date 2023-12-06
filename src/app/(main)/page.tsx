@@ -41,7 +41,7 @@ export default function Home() {
         <h2>Products</h2>
       </div>
 
-      <div className="flex flex-wrap space-x-3">
+      <div className="flex justify-between items-center flex-wrap mb-7">
         {state.loading ? (
           <ThreeDots
             height="80"
@@ -54,7 +54,7 @@ export default function Home() {
           />
         ) : (
           <>
-            {state.products?.slice(0, 6).map((product: any) => (
+            {state.products?.slice(0,6).map((product: any) => (
               <div key={product.id}>
                 <ProductCard {...product} />
               </div>

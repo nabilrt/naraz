@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 
 type ProductDataProps = {
-  id: string;
+  id: number;
   title: string;
   price: number;
   description: string;
@@ -18,26 +18,11 @@ type ProductDataProps = {
 };
 
 const ProductCard = (productData: ProductDataProps) => {
-  const { cartItem, setCartItem } = useCart();
+  const { handleCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
-  const handleCart = async (quantity: number) => {
-    const updatedCartItem = [...cartItem];
-    const existingProduct = updatedCartItem.find(
-      (item) => item.id === productData.id
-    );
-
-    if (existingProduct) {
-      existingProduct.quantity = (existingProduct.quantity || 1) + quantity;
-    } else {
-      updatedCartItem.push({ ...productData, quantity: quantity });
-    }
-
-    await setCartItem(updatedCartItem);
-  };
-
   return (
-    <div className="p-2 flex flex-col items-center justify-center m-auto bg-white rounded-md shadow-lg">
+    <div className="p-2 flex flex-col items-center justify-center m-auto bg-white rounded-md shadow-lg w-[200px] border-solid border-[#000] border ">
       <img
         className="w-24 h-24 mb-6"
         src={productData.image}
@@ -45,15 +30,15 @@ const ProductCard = (productData: ProductDataProps) => {
       />
       <div className="flex flex-col items-center justify-center w-full h-56">
         <h1 className="text-sm font-semibold text-center mb-2">
-          {productData.title}
+          {productData.title.slice(0, 20)}
         </h1>
         <p className="text-sm font-normal text-center mb-2">
-          {productData.description.substring(0, 50)}...
+          {productData.description.slice(0, 50)}...
         </p>
         <p className="text-sm font-semibold text-center mb-2">
           Price: {productData.price} BDT
         </p>
-        <div className="flex items-center mb-3">
+        <div className="flex items-center mt-auto">
           <button
             className="bg-gray-200 px-3 py-1 rounded-l"
             onClick={() => setQuantity((prevQuantity) => prevQuantity - 1)}
@@ -75,8 +60,8 @@ const ProductCard = (productData: ProductDataProps) => {
         </div>
         <Button
           variant="primary"
-          className="mb-4"
-          onClick={() => handleCart(quantity)}
+          className=""
+          onClick={() => handleCart(productData, quantity)}
         >
           <FontAwesomeIcon icon={faCartPlus} />
         </Button>

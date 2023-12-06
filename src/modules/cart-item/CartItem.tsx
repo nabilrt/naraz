@@ -1,7 +1,6 @@
 import { useCart } from "@/lib/contexts/cart-provider";
 import Button from "../button/button";
-import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 
 type ProductDataProps = {
   id: number;
@@ -18,41 +17,8 @@ type ProductDataProps = {
 };
 
 const CartItem = (productData: ProductDataProps) => {
-  const { cartItem, setCartItem } = useCart();
-  const [quantity, setQuantity] = useState(productData.quantity);
-
-  const UpdateCartItem = async (id: number, quantity: number) => {
-    const updatedCartItem = [...cartItem];
-    const existingProduct = updatedCartItem.find((item: any) => item.id === id);
-
-    existingProduct.quantity = quantity;
-
-    await setCartItem(updatedCartItem);
-
-    toast.success("Cart Updated!", {
-      duration: 2000,
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
-  };
-
-  const RemoveCartItem = async (id: number) => {
-    const newCart = cartItem.filter((item: any) => item.id !== id);
-    await setCartItem(newCart);
-    toast.success("Item Removed From Cart!", {
-      duration: 2000,
-
-      // Styling
-      style: {
-        borderRadius: "10px",
-        background: "#333",
-        color: "#fff",
-      },
-    });
-  };
+  const { UpdateCartItem, RemoveCartItem } = useCart();
+  const [quantity, setQuantity] = useState<number>(productData.quantity);
 
   return (
     <div className="p-3">
@@ -105,7 +71,7 @@ const CartItem = (productData: ProductDataProps) => {
               {quantity > 0 && (
                 <Button
                   variant="secondary"
-                  onClick={(e) => UpdateCartItem(productData.id, quantity)}
+                  onClick={() => UpdateCartItem(productData.id, quantity)}
                 >
                   Update
                 </Button>
@@ -113,7 +79,7 @@ const CartItem = (productData: ProductDataProps) => {
 
               <Button
                 variant="danger"
-                onClick={(e) => RemoveCartItem(productData.id)}
+                onClick={() => RemoveCartItem(productData.id)}
               >
                 Remove
               </Button>

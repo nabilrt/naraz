@@ -21,7 +21,7 @@ export const postReducer = (state: any, action: any) => {
       return {
         ...state,
         loading: false,
-        error: action.payload,
+        error: true,
       };
     default:
       return state;

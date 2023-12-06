@@ -72,7 +72,6 @@ const Login = () => {
                   color="#F5F8F5"
                   ariaLabel="three-dots-loading"
                   wrapperStyle={{}}
-                  
                   visible={true}
                 />
               ) : (

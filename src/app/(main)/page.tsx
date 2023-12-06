@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@/lib/contexts/auth-context";
-import { postReducer, INITIAL_STATE } from "@/lib/reducers/productReducer";
-import { ProductReducerActionProps } from "@/lib/reducers/productReducerActionProps";
+import { postReducer, INITIAL_STATE } from "@/lib/reducers/product-reducer/productReducer";
+import { ProductReducerActionProps } from "@/lib/reducers/product-reducer/productReducerActionProps";
 import ProductCard from "@/modules/product-card/ProductCard";
 import { useEffect, useReducer } from "react";
 import { ThreeDots } from "react-loader-spinner";

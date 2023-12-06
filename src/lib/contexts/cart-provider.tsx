@@ -1,6 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { CartContext } from "./cart-context";
 import toast from "react-hot-toast";
+import { cartReducer } from "../reducers/cart-reducer/cartReducer";
+import { CART_REDUCER_ACTION_PROPS } from "../reducers/cart-reducer/cartReducerProps";
 
 type ProductDataProps = {
   id: number;
@@ -34,24 +36,17 @@ export default function CartContextProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [cartItem, setCartItem] = useState<CartDataProps[]>([]);
+  const [state, dispatch] = useReducer(cartReducer, []);
 
   const handleCart = async (
     productData: ProductDataProps,
     quantity: number
   ) => {
-    const updatedCartItem = [...cartItem];
-    const existingProduct = updatedCartItem.find(
-      (item: any) => item.id === productData.id
-    );
-
-    if (existingProduct) {
-      existingProduct.quantity = (existingProduct.quantity || 1) + quantity;
-    } else {
-      updatedCartItem.push({ ...productData, quantity: quantity });
-    }
-
-    await setCartItem(updatedCartItem);
+    dispatch({
+      type: CART_REDUCER_ACTION_PROPS.ADD_TO_CART,
+      payload: productData,
+      quantity: quantity,
+    });
     toast.success("Added to Cart!", {
       duration: 2000,
       style: {
@@ -63,12 +58,11 @@ export default function CartContextProvider({
   };
 
   const UpdateCartItem = async (id: number, quantity: number) => {
-    const updatedCartItem = [...cartItem];
-    const existingProduct = updatedCartItem.find((item: any) => item.id === id);
-
-    existingProduct!.quantity = quantity;
-
-    await setCartItem(updatedCartItem);
+    dispatch({
+      type: CART_REDUCER_ACTION_PROPS.UPDATE_CART,
+      payload: id,
+      quantity: quantity,
+    });
 
     toast.success("Cart Updated!", {
       duration: 2000,
@@ -81,8 +75,10 @@ export default function CartContextProvider({
   };
 
   const RemoveCartItem = async (id: number) => {
-    const newCart = cartItem.filter((item: any) => item.id !== id);
-    await setCartItem(newCart);
+    dispatch({
+      type: CART_REDUCER_ACTION_PROPS.REMOVE_FROM_CART,
+      payload: id,
+    });
     toast.success("Item Removed From Cart!", {
       duration: 2000,
 
@@ -98,11 +94,10 @@ export default function CartContextProvider({
   return (
     <CartContext.Provider
       value={{
-        cartItem,
-        setCartItem,
         handleCart,
         UpdateCartItem,
         RemoveCartItem,
+        state,
       }}
     >
       {children}
@@ -119,6 +114,3 @@ export const useCart = () => {
 
   return context;
 };
-
-// Usage of CartContext
-// ...

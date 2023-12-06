@@ -1,8 +1,10 @@
 import { useCart } from "@/lib/contexts/cart-provider";
 import Button from "../button/button";
-import { useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { cartReducer } from "@/lib/reducers/cart-reducer/cartReducer";
+import { CART_REDUCER_ACTION_PROPS } from "@/lib/reducers/cart-reducer/cartReducerProps";
 
 type ProductDataProps = {
   id: number;
@@ -60,10 +62,10 @@ const ProductCard = (productData: ProductDataProps) => {
         </div>
         <Button
           variant="primary"
-          className=""
+          className="mt-2"
           onClick={() => handleCart(productData, quantity)}
         >
-          <FontAwesomeIcon icon={faCartPlus} />
+          <FontAwesomeIcon icon={faCartPlus} size={"lg"} />
         </Button>
       </div>
     </div>

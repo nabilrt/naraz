@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {
   User,
+  UserCredential,
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
@@ -10,10 +11,10 @@ import { createContext, useContext, useEffect, useState } from "react";
 import firebaseConfig from "../firebase";
 
 type AuthProviderType = {
-  currentUser: any;
-  signIn: any;
-  signUp: any;
-  signOut: any;
+  currentUser: User | undefined;
+  signIn: (email: string, password: string) => Promise<UserCredential>;
+  signUp: (fullName: string, email: string, password: string) => void;
+  signOut: () => Promise<void>;
 };
 
 export const AuthProvider = createContext<AuthProviderType | null>(null);

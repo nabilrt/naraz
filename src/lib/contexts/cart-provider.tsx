@@ -42,6 +42,7 @@ export default function CartContextProvider({
     productData: ProductDataProps,
     quantity: number
   ) => {
+    console.log(quantity);
     dispatch({
       type: CART_REDUCER_ACTION_PROPS.ADD_TO_CART,
       payload: productData,

@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const NavBar = () => {
-  const { cartItem } = useCart();
+  const { state: data } = useCart();
   const { currentUser, signOut } = useAuth();
   let router = useRouter();
 
@@ -37,8 +37,7 @@ const NavBar = () => {
         )}
         <li className="mt-1">
           <Link href="/cart">
-            Cart{" "}
-            {cartItem && cartItem.length > 0 ? <>({cartItem.length})</> : <></>}
+            Cart {data && data.length > 0 ? <>({data.length})</> : <></>}
           </Link>
         </li>
         {currentUser && (

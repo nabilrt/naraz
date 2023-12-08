@@ -6,8 +6,14 @@ export const cartReducer = (state: any, action: any) => {
       const items = [...state];
       const item = items.find((item: any) => item.id === action.payload.id);
       if (item) {
-        item.quantity += action.quantity;
-        return [...items];
+        const updatedItem = {
+          ...item,
+          quantity: item.quantity + action.quantity,
+        };
+        const newItems = items.map((item: any) =>
+          item.id === action.payload.id ? updatedItem : item
+        );
+        return [...newItems];
       } else {
         return [...state, { ...action.payload, quantity: action.quantity }];
       }
@@ -19,8 +25,11 @@ export const cartReducer = (state: any, action: any) => {
       const existingitem = existingItems.find(
         (item: any) => item.id === action.payload
       );
-      existingitem.quantity = action.quantity;
-      return [...existingItems];
+      const afterUpdateItems = { ...existingitem, quantity: action.quantity };
+      const updatedItems = existingItems.map((item: any) =>
+        item.id === action.payload ? afterUpdateItems : item
+      );
+      return [...updatedItems];
     default:
       return state;
   }

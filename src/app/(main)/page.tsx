@@ -1,36 +1,12 @@
 "use client";
 import { useAuth } from "@/lib/contexts/auth-context";
-import { postReducer, INITIAL_STATE } from "@/lib/reducers/product-reducer/productReducer";
-import { ProductReducerActionProps } from "@/lib/reducers/product-reducer/productReducerActionProps";
+import { useProducts } from "@/lib/hooks/useProducts";
+import WaitLoader from "@/lib/loaders/wait-loader";
 import ProductCard from "@/modules/product-card/ProductCard";
-import { useEffect, useReducer } from "react";
-import { ThreeDots } from "react-loader-spinner";
 
 export default function Home() {
-  const [state, dispatch] = useReducer(postReducer, INITIAL_STATE);
+  const { state } = useProducts();
   const { currentUser } = useAuth();
-
-  const fetchProducts = () => {
-    dispatch({ type: ProductReducerActionProps.POST_LOADING });
-    fetch("https://fakestoreapi.com/products")
-      .then((res) => res.json())
-      .then((data) => {
-        dispatch({
-          type: ProductReducerActionProps.POST_SUCCESS,
-          payload: data,
-        });
-      })
-      .catch((error) => {
-        dispatch({
-          type: ProductReducerActionProps.POST_ERROR,
-          payload: error.message,
-        });
-      });
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   return (
     <div className="container mx-auto">
@@ -40,21 +16,12 @@ export default function Home() {
       <div className="font-semibold mb-4">
         <h2>Products</h2>
       </div>
-
       <div className="flex justify-between items-center flex-wrap mb-7">
         {state.loading ? (
-          <ThreeDots
-            height="80"
-            width="80"
-            radius="9"
-            color="#805ad5"
-            ariaLabel="three-dots-loading"
-            wrapperStyle={{}}
-            visible={true}
-          />
+          <WaitLoader />
         ) : (
           <>
-            {state.products?.slice(0,6).map((product: any) => (
+            {state.products?.slice(0, 6).map((product: any) => (
               <div key={product.id}>
                 <ProductCard {...product} />
               </div>

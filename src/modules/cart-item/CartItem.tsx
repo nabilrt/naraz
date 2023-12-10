@@ -1,10 +1,8 @@
 import { useCart } from "@/lib/contexts/cart-provider";
 import Button from "../button/button";
-import { useReducer, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePen, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import { cartReducer } from "@/lib/reducers/cart-reducer/cartReducer";
-import { CART_REDUCER_ACTION_PROPS } from "@/lib/reducers/cart-reducer/cartReducerProps";
 
 type ProductDataProps = {
   id: number;

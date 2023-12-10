@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { useContext, useReducer } from "react";
 import { CartContext } from "./cart-context";
 import toast from "react-hot-toast";
 import { cartReducer } from "../reducers/cart-reducer/cartReducer";
